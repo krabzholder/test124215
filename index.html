@@ -22,9 +22,9 @@
   <ul id="file-list"></ul>
 
   <script>
-    const repoOwner = 'krabzholder';  // Replace with your GitHub username
-    const repoName = 'test124215';       // Replace with your repository name
-    const folderPath = './orders';       // The folder where the files are uploaded
+    const repoOwner = 'krabzholder';  
+    const repoName = 'test124215';       
+    const folderPath = './orders';       
     const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${folderPath}`;
 
     async function fetchFileList() {
@@ -40,24 +40,22 @@
 
     function updateFileList(files) {
   const fileList = document.getElementById('file-list');
-  fileList.innerHTML = '';  // Clear any existing list items
+  fileList.innerHTML = '';  
 
   files.forEach(file => {
     const listItem = document.createElement('li');
     const fileLink = document.createElement('a');
     
-    // Construct the 'blob' URL for viewing the file on GitHub
+    // url stuff
     fileLink.href = `https://github.com/${repoOwner}/${repoName}/blob/main/${folderPath}/${encodeURIComponent(file.name)}`;
     
     fileLink.textContent = file.name;
-    fileLink.target = '_blank'; // Opens the file in a new tab
+    fileLink.target = '_blank'; // new tab :3
     listItem.appendChild(fileLink);
     fileList.appendChild(listItem);
   });
 }
-
-
-    fetchFileList();  // Fetch the file list when the page loads
+    fetchFileList();  
   </script>
 </body>
 </html>
