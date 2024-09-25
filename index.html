@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File List</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    li {
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Uploaded Files</h1>
+  <ul id="file-list"></ul>
+
+  <script>
+    const repoOwner = 'krabzholder';  // Replace with your GitHub username
+    const repoName = 'test124215';       // Replace with your repository name
+    const folderPath = './orders';       // The folder where the files are uploaded
+    const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${folderPath}`;
+
+    async function fetchFileList() {
+      try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) throw new Error('Failed to fetch file list');
+        const files = await response.json();
+        updateFileList(files);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    function updateFileList(files) {
+      const fileList = document.getElementById('file-list');
+      fileList.innerHTML = '';  // Clear any existing list items
+
+      files.forEach(file => {
+        const listItem = document.createElement('li');
+        const fileLink = document.createElement('a');
+        fileLink.href = file.download_url;
+        fileLink.textContent = file.name;
+        listItem.appendChild(fileLink);
+        fileList.appendChild(listItem);
+      });
+    }
+
+    fetchFileList();  // Fetch the file list when the page loads
+  </script>
+</body>
+</html>
